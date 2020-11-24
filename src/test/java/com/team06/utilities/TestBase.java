@@ -11,14 +11,14 @@ import java.util.concurrent.TimeUnit;
 public abstract class TestBase {
     protected WebDriver driver;//child lardan cagirabilmek icin en az protected veya public olmali
     @BeforeClass
-    public void setUp(){
+    public void setUp() throws InterruptedException {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().window().maximize();
     }
     @AfterClass
-    public void tearDown(){
+    public void tearDown() throws InterruptedException {
         //driver.quit();
     }
 }

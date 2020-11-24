@@ -41,6 +41,7 @@ public class Driver {
                 case "ie":
                     WebDriverManager.iedriver().setup();
                     driver = new InternetExplorerDriver();
+                    break;
                 case "safari":
                     WebDriverManager.getInstance(SafariDriver.class).setup();
                     driver = new SafariDriver();
