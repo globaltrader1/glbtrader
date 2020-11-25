@@ -55,14 +55,19 @@ public class OnurUS17Page {
     public WebElement contactUsYazisi;
     //=======================TC07==========================
     @FindBy(xpath = "//button[@id='cart']")
-    public WebElement addToCartButonu;
+    public WebElement sepeteUrunEkleButonu;
 
     @FindBy(xpath = "//*[text()='Your Shopping Cart ']")
-    public WebElement alisverisSepetindekiDogrulama;
+    public WebElement alisverisSepetindekiDogrulamaYazisi;
     //=======================TC08==========================
-    @FindBy(xpath = "//a[@onclick=\"return confirm('Do You  want to delete ?');\"]")
-    public WebElement istekListesiRemoveButonu;
+    @FindBy(xpath = "//span[text()='Remove']")
+    public WebElement sepettekiRemoveButonu;
 
+    @FindBy(xpath = "//*[text()='Product Name']")
+    public WebElement sepetteUrunMevcut;
+
+    @FindBy(xpath = "//*[text()='Record Not Found..']")
+    public WebElement sepetteUrunBulunamadiYazisi;
     //=======================TC09==========================
 
     //=======================TC10==========================
