@@ -54,7 +54,7 @@ public class OnurUS17Page {
     @FindBy(xpath = "//h1[text()='Contact Us ']")
     public WebElement contactUsYazisi;
     //=======================TC07==========================
-    @FindBy(xpath = "//input[@value='Add To Cart']")
+    @FindBy(xpath = "//button[@id='cart']")
     public WebElement addToCartButonu;
 
     @FindBy(xpath = "//*[text()='Your Shopping Cart ']")
