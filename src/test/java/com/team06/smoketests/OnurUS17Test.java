@@ -7,10 +7,10 @@ import com.team06.utilities.Driver;
 import com.team06.utilities.TestBase;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -138,8 +138,28 @@ public class OnurUS17Test extends TestBase {
         alert.accept();
     }
 
-    @Test  //@Ignore
+    @Test (dependsOnMethods = "US17TC09") //@Ignore
     public void US17TC08() throws InterruptedException {
+        SoftAssert softAssert = new SoftAssert();
+        OnurUS17Page us17Page = new OnurUS17Page();
+        Thread.sleep(1000);
+        us17Page.sepeteUrunEkleButonu.click();
+        String sepetteUrunMevcut = us17Page.sepetteUrunMevcut.getText();
+        System.out.println(sepetteUrunMevcut);
+        Thread.sleep(1000);
+
+        us17Page.sepettekiRemoveButonu.click();
+
+        Alert alert = Driver.getDriver().switchTo().alert();
+        Thread.sleep(2000);
+        String alertText = alert.getText();
+        System.out.println("Alert data: " + alertText);
+        alert.dismiss();
+        softAssert.assertTrue(us17Page.sepetteUrunMevcut.isDisplayed());
+        softAssert.assertAll();
+    }
+    @Test
+    public void US17TC09() throws InterruptedException {
         SoftAssert softAssert = new SoftAssert();
         OnurUS17Page us17Page = new OnurUS17Page();
         Thread.sleep(1000);
@@ -157,7 +177,63 @@ public class OnurUS17Test extends TestBase {
         alert.accept();
         softAssert.assertTrue(us17Page.sepetteUrunBulunamadiYazisi.isDisplayed());
         softAssert.assertAll();
-}
+    }
+    @Test
+    public void US17TC10() throws InterruptedException {
+        SoftAssert softAssert = new SoftAssert();
+        OnurUS17Page us17Page = new OnurUS17Page();
+        Thread.sleep(1000);
+        us17Page.sepeteUrunEkleButonu.click();
+
+        Select select = new Select(us17Page.shippingDropDown);
+        select.selectByIndex(0);
+
+        softAssert.assertTrue(select.getFirstSelectedOption().getText().startsWith("Expres"));
+        softAssert.assertAll();
+
+        us17Page.sepettekiRemoveButonu.click();
+        Alert alert = Driver.getDriver().switchTo().alert();
+        Thread.sleep(2000);
+        String alertText = alert.getText();
+        System.out.println("Alert data: " + alertText);
+        alert.accept();
+    }
+    @Test
+    public void US17TC11() throws InterruptedException {
+        SoftAssert softAssert = new SoftAssert();
+        OnurUS17Page us17Page = new OnurUS17Page();
+        Thread.sleep(1000);
+        us17Page.sepeteUrunEkleButonu.click();
+
+        Select select = new Select(us17Page.shippingDropDown);
+        select.selectByIndex(1);
+
+        softAssert.assertTrue(select.getFirstSelectedOption().getText().startsWith("Standart"));
+        softAssert.assertAll();
+
+        us17Page.sepettekiRemoveButonu.click();
+        Alert alert = Driver.getDriver().switchTo().alert();
+        Thread.sleep(2000);
+        String alertText = alert.getText();
+        System.out.println("Alert data: " + alertText);
+        alert.accept();
+    }
+    @Test
+    public void US17TC12() throws InterruptedException {
+        SoftAssert softAssert = new SoftAssert();
+        OnurUS17Page us17Page = new OnurUS17Page();
+        Thread.sleep(1000);
+        us17Page.sepeteUrunEkleButonu.click();
+
+        us17Page.sepettekiSatinAlmaButonu.click();
+        softAssert.assertTrue(us17Page.satinAlmaAdresBilgileriGorundu.isDisplayed());
+        softAssert.assertAll();
+    }
+
+
+
+
+
     @AfterMethod
     public void tearDown() throws InterruptedException {
         Thread.sleep(1000);
