@@ -9,10 +9,12 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import java.util.concurrent.TimeUnit;
 
 public class OnurUS17Test extends TestBase {
 
@@ -99,13 +101,20 @@ public class OnurUS17Test extends TestBase {
         Thread.sleep(1000);
         us17Page.istekListesineEkleLinki.click();
         Thread.sleep(1000);
+
         us17Page.istekListesineEkleLinki.click();
         Thread.sleep(1000);
         String mukerrerEklemeUyarisi = us17Page.mukerrerEklemeYapilamazUyarisi.getText();
         System.out.println(mukerrerEklemeUyarisi);
         softAssert.assertTrue(mukerrerEklemeUyarisi.equals("Oops ! Already added to Wishlist"));
-        us17Page.mukerrerUyariYazisiKapatma.click();
         softAssert.assertAll();
+        us17Page.mukerrerUyariYazisiKapatma.click();
+
+        Driver.getDriver().get(ConfigurationReader.getProperty("istek_linki"));
+        Thread.sleep(1000);
+        us17Page.istekListesiUrunSilme.click();
+        Thread.sleep(1000);
+        Driver.getDriver().switchTo().alert().accept();
     }
 
     @Test
@@ -122,23 +131,13 @@ public class OnurUS17Test extends TestBase {
     public void US17TC07() throws InterruptedException {
         SoftAssert softAssert = new SoftAssert();
         OnurUS17Page us17Page = new OnurUS17Page();
-        us17Page.sepeteUrunEkleButonu.click();
+        us17Page.sepeteSifirdanUrunEkleButonu.click();
         System.out.println(us17Page.alisverisSepetindekiDogrulamaYazisi.getText());
         softAssert.assertTrue(us17Page.alisverisSepetindekiDogrulamaYazisi.isDisplayed());
         softAssert.assertAll();
-        //sepete urun eklendigini gordukten sonra eklenen urunu simdi silmeliyiz
-        //Cunku buton degisikliginden dolayi TC08'de hata aliyoruz
-        //Sepette hic urun yokken ismi "Buy Now" olan buton
-        //eger sepette urun varsa ikinci urunu eklerken "Add To Cart" butonuna donusuyor
-        us17Page.sepettekiRemoveButonu.click();
-        Alert alert = Driver.getDriver().switchTo().alert();
-        Thread.sleep(2000);
-        String alertText = alert.getText();
-        System.out.println("Alert data: " + alertText);
-        alert.accept();
     }
 
-    @Test (dependsOnMethods = "US17TC09") //@Ignore
+    @Test  //@Ignore
     public void US17TC08() throws InterruptedException {
         SoftAssert softAssert = new SoftAssert();
         OnurUS17Page us17Page = new OnurUS17Page();
@@ -183,20 +182,13 @@ public class OnurUS17Test extends TestBase {
         SoftAssert softAssert = new SoftAssert();
         OnurUS17Page us17Page = new OnurUS17Page();
         Thread.sleep(1000);
-        us17Page.sepeteUrunEkleButonu.click();
+        us17Page.sepeteSifirdanUrunEkleButonu.click();
 
         Select select = new Select(us17Page.shippingDropDown);
         select.selectByIndex(0);
 
         softAssert.assertTrue(select.getFirstSelectedOption().getText().startsWith("Expres"));
         softAssert.assertAll();
-
-        us17Page.sepettekiRemoveButonu.click();
-        Alert alert = Driver.getDriver().switchTo().alert();
-        Thread.sleep(2000);
-        String alertText = alert.getText();
-        System.out.println("Alert data: " + alertText);
-        alert.accept();
     }
     @Test
     public void US17TC11() throws InterruptedException {
@@ -210,13 +202,6 @@ public class OnurUS17Test extends TestBase {
 
         softAssert.assertTrue(select.getFirstSelectedOption().getText().startsWith("Standart"));
         softAssert.assertAll();
-
-        us17Page.sepettekiRemoveButonu.click();
-        Alert alert = Driver.getDriver().switchTo().alert();
-        Thread.sleep(2000);
-        String alertText = alert.getText();
-        System.out.println("Alert data: " + alertText);
-        alert.accept();
     }
     @Test
     public void US17TC12() throws InterruptedException {
@@ -229,14 +214,136 @@ public class OnurUS17Test extends TestBase {
         softAssert.assertTrue(us17Page.satinAlmaAdresBilgileriGorundu.isDisplayed());
         softAssert.assertAll();
     }
+    @Test
+    public void US17TC13() throws InterruptedException {
+        SoftAssert softAssert = new SoftAssert();
+        OnurUS17Page us17Page = new OnurUS17Page();
+        Thread.sleep(1000);
+        us17Page.sepeteUrunEkleButonu.click();
+        us17Page.sepettekiSatinAlmaButonu.click();
+        us17Page.fullNameBox.clear();
+        us17Page.mobilNumberBox.clear();
+        us17Page.postalCodeBox.clear();
+        us17Page.streetAddressBox.clear();
+        us17Page.fullNameBox.sendKeys(ConfigurationReader.getProperty("full_name"));
+        us17Page.mobilNumberBox.sendKeys(ConfigurationReader.getProperty("mobile_number"));
+        Thread.sleep(1000);
+        Select selectCountry = new Select(us17Page.countryRagionDropDown);
+        selectCountry.selectByVisibleText(ConfigurationReader.getProperty("country_region"));
+        Select selectState = new Select(us17Page.stateRagionDropDown);
+        selectState.selectByVisibleText(ConfigurationReader.getProperty("state_province_region"));
+        Select selectCity = new Select(us17Page.cityDropDown);
+        selectCity.selectByVisibleText(ConfigurationReader.getProperty("city"));
 
+        us17Page.postalCodeBox.sendKeys(ConfigurationReader.getProperty("ZIP_postal_code"));
+        us17Page.streetAddressBox.sendKeys(ConfigurationReader.getProperty("street_address"));
 
+        Thread.sleep(1000);
+        us17Page.saveShipButonu.click();
+        us17Page.placeOrderButonu.click();
 
+        Thread.sleep(1000);
+        softAssert.assertTrue(us17Page.paymentsSayfaYazisi.isDisplayed());
+        softAssert.assertAll();
+    }
+    @Test
+    public void US17TC14() throws InterruptedException {
+        SoftAssert softAssert = new SoftAssert();
+        OnurUS17Page us17Page = new OnurUS17Page();
+        Thread.sleep(1000);
+        us17Page.sepeteUrunEkleButonu.click();
+        us17Page.sepettekiSatinAlmaButonu.click();
+        us17Page.fullNameBox.clear();
+        us17Page.mobilNumberBox.clear();
+        us17Page.postalCodeBox.clear();
+        us17Page.streetAddressBox.clear();
+        us17Page.fullNameBox.sendKeys(ConfigurationReader.getProperty("full_name"));
+        us17Page.mobilNumberBox.sendKeys(ConfigurationReader.getProperty("mobile_number"));
+        Thread.sleep(1000);
+        Select selectCountry = new Select(us17Page.countryRagionDropDown);
+        selectCountry.selectByVisibleText(ConfigurationReader.getProperty("country_region"));
+        Select selectState = new Select(us17Page.stateRagionDropDown);
+        selectState.selectByVisibleText(ConfigurationReader.getProperty("state_province_region"));
+        Select selectCity = new Select(us17Page.cityDropDown);
+        selectCity.selectByVisibleText(ConfigurationReader.getProperty("city"));
 
+        us17Page.postalCodeBox.sendKeys(ConfigurationReader.getProperty("ZIP_postal_code"));
+        us17Page.streetAddressBox.sendKeys(ConfigurationReader.getProperty("street_address"));
 
+        Thread.sleep(1000);
+        us17Page.saveShipButonu.click();
+        us17Page.placeOrderButonu.click();
+
+        Thread.sleep(1000);
+        us17Page.paypalRadioButton.click();
+        Thread.sleep(1000);
+        softAssert.assertTrue(us17Page.paypalRadioButton.isSelected());
+        softAssert.assertAll();
+        Thread.sleep(1000);
+        us17Page.paymentsContinueButton.click();
+
+        Driver.getDriver().manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+
+        softAssert.assertTrue(Driver.getDriver().getCurrentUrl().contains("paypal"));
+        softAssert.assertAll();
+    }
+    @Test
+    public void US17TC15() throws InterruptedException {
+        SoftAssert softAssert = new SoftAssert();
+        OnurUS17Page us17Page = new OnurUS17Page();
+        Thread.sleep(1000);
+        us17Page.sepeteUrunEkleButonu.click();
+        us17Page.sepettekiSatinAlmaButonu.click();
+        us17Page.fullNameBox.clear();
+        us17Page.mobilNumberBox.clear();
+        us17Page.postalCodeBox.clear();
+        us17Page.streetAddressBox.clear();
+        us17Page.fullNameBox.sendKeys(ConfigurationReader.getProperty("full_name"));
+        us17Page.mobilNumberBox.sendKeys(ConfigurationReader.getProperty("mobile_number"));
+        Thread.sleep(1000);
+        Select selectCountry = new Select(us17Page.countryRagionDropDown);
+        selectCountry.selectByVisibleText(ConfigurationReader.getProperty("country_region"));
+        Select selectState = new Select(us17Page.stateRagionDropDown);
+        selectState.selectByVisibleText(ConfigurationReader.getProperty("state_province_region"));
+        Select selectCity = new Select(us17Page.cityDropDown);
+        selectCity.selectByVisibleText(ConfigurationReader.getProperty("city"));
+
+        us17Page.postalCodeBox.sendKeys(ConfigurationReader.getProperty("ZIP_postal_code"));
+        us17Page.streetAddressBox.sendKeys(ConfigurationReader.getProperty("street_address"));
+
+        Thread.sleep(1000);
+        us17Page.saveShipButonu.click();
+        us17Page.placeOrderButonu.click();
+
+        Thread.sleep(2000);
+        us17Page.athorizedRadioButton.click();
+        Thread.sleep(2000);
+        softAssert.assertTrue(us17Page.athorizedRadioButton.isSelected());
+        softAssert.assertAll();
+
+        softAssert.assertTrue(us17Page.athorizedDogrulamaYazisi.isDisplayed());
+        softAssert.assertAll();
+    }
     @AfterMethod
     public void tearDown() throws InterruptedException {
         Thread.sleep(1000);
+        Driver.closeDriver();
+    }
+    @AfterClass
+    public void close() throws InterruptedException {
+        Driver.getDriver().get(ConfigurationReader.getProperty("url_login"));
+        Thread.sleep(1000);
+        OnurUS16Page us16Page = new OnurUS16Page();
+        OnurUS17Page us17Page = new OnurUS17Page();
+        us16Page.loginEmailKutusu.sendKeys(ConfigurationReader.getProperty("email"));
+        us16Page.loginPasswordKutusu.sendKeys(ConfigurationReader.getProperty("password"));
+        us16Page.loginButonu.click();
+        Driver.getDriver().get(ConfigurationReader.getProperty("istek_linki"));
+        us17Page.istekListesiUrunSilme.click();
+        Driver.getDriver().switchTo().alert().accept();
+        Driver.getDriver().get(ConfigurationReader.getProperty("urunsepeti_linki"));
+        us17Page.sepettekiRemoveButonu.click();
+        Driver.getDriver().switchTo().alert().accept();
         Driver.closeDriver();
     }
 }
