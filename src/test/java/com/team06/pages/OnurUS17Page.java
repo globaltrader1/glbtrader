@@ -44,7 +44,8 @@ public class OnurUS17Page {
     //=========================TC05=========================
     @FindBy(xpath = "//*[.='Oops ! Already added to Wishlist']")
     public WebElement mukerrerEklemeYapilamazUyarisi;
-
+    @FindBy(xpath = "//i[@class='fa fa-times']")
+    public WebElement istekListesiUrunSilme;
     @FindBy(xpath = "//i[@onclick='onClickAlertMessageClose();']")
     public WebElement mukerrerUyariYazisiKapatma;
     //=========================TC06=========================
@@ -54,7 +55,7 @@ public class OnurUS17Page {
     @FindBy(xpath = "//h1[text()='Contact Us ']")
     public WebElement contactUsYazisi;
     //=======================TC07==========================
-    @FindBy(xpath = "//button[@id='cart']")
+    @FindBy(xpath = "//input[@value='Add To Cart']")
     public WebElement sepeteUrunEkleButonu;
 
     @FindBy(xpath = "//*[text()='Your Shopping Cart ']")
@@ -69,6 +70,8 @@ public class OnurUS17Page {
     @FindBy(xpath = "//*[text()='Record Not Found..']")
     public WebElement sepetteUrunBulunamadiYazisi;
     //=======================TC10-11==========================
+    @FindBy(xpath = "//button[@name='buynow_submit']")
+    public WebElement sepeteSifirdanUrunEkleButonu;
     @FindBy(xpath = "//select[@class='form-control cart_carrier_dropdown_small']")
     public WebElement shippingDropDown;
     //=======================TC12==========================
@@ -76,13 +79,39 @@ public class OnurUS17Page {
     public WebElement sepettekiSatinAlmaButonu;
     @FindBy(xpath = "//h4[text()='1. Please fill in your shipping information :']")
     public WebElement satinAlmaAdresBilgileriGorundu;
-
+    //=======================TC13==========================
+    @FindBy(xpath = "//*[@id='delivery_name']")
+    public WebElement fullNameBox;
+    @FindBy(xpath = "//*[@id='delivery_mobile']")
+    public WebElement mobilNumberBox;
+    @FindBy(xpath = "//input[@id='delivery_pin_code']")
+    public WebElement postalCodeBox;
+    @FindBy(xpath = "//*[@id='delivery_address']")
+    public WebElement streetAddressBox;
+    @FindBy(xpath = "//*[@id='select_country']")
+    public WebElement countryRagionDropDown;
+    @FindBy(xpath = "//*[@id='select_state']")
+    public WebElement stateRagionDropDown;
+    @FindBy(xpath = "//*[@id='select_city']")
+    public WebElement cityDropDown;
+    @FindBy(xpath = "//*[@id='delivery_address_submit']")
+    public WebElement saveShipButonu;
+    @FindBy(xpath = "//button[@id='checkout_submit']")
+    public WebElement placeOrderButonu;
+    @FindBy(xpath = "//h4[text()='Choice Your Payment Option :']")
+    public WebElement paymentsSayfaYazisi;
     //=======================TC14==========================
-
+    @FindBy(xpath = "//div/input[@value='PP']")
+    public WebElement paypalRadioButton;
+    @FindBy(xpath = "//form/input[@value='Continue']")
+    public WebElement paymentsContinueButton;
+    @FindBy(xpath = "//p[@aria-label='PayPal Logo']")
+    public WebElement paypalSitesiLogo;
     //=======================TC15==========================
-
-    //=======================TC16==========================
-
+   @FindBy(xpath = "//div/input[@value='ATH']")
+   public WebElement athorizedRadioButton;
+   @FindBy(xpath = "//h4[text()='Athorised Payment']")
+   public WebElement athorizedDogrulamaYazisi;
 
 
 
