@@ -59,7 +59,7 @@ public class OnurUS17Page {
 
     @FindBy(xpath = "//*[text()='Your Shopping Cart ']")
     public WebElement alisverisSepetindekiDogrulamaYazisi;
-    //=======================TC08==========================
+    //=======================TC08-9==========================
     @FindBy(xpath = "//span[text()='Remove']")
     public WebElement sepettekiRemoveButonu;
 
@@ -68,13 +68,14 @@ public class OnurUS17Page {
 
     @FindBy(xpath = "//*[text()='Record Not Found..']")
     public WebElement sepetteUrunBulunamadiYazisi;
-    //=======================TC09==========================
-
-    //=======================TC10==========================
-
-    //=======================TC11==========================
-
+    //=======================TC10-11==========================
+    @FindBy(xpath = "//select[@class='form-control cart_carrier_dropdown_small']")
+    public WebElement shippingDropDown;
     //=======================TC12==========================
+    @FindBy(xpath = "//a[text()='Buy Now']")
+    public WebElement sepettekiSatinAlmaButonu;
+    @FindBy(xpath = "//h4[text()='1. Please fill in your shipping information :']")
+    public WebElement satinAlmaAdresBilgileriGorundu;
 
     //=======================TC14==========================
 
