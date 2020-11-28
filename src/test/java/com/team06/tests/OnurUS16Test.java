@@ -1,12 +1,9 @@
 package com.team06.tests;
 
 import com.team06.pages.OnurUS16Page;
-import com.team06.utilities.ConfigurationReader;
-import com.team06.utilities.Driver;
-import com.team06.utilities.TestBase;
+import com.team06.utilities.*;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import org.testng.asserts.SoftAssert;
 
 public class OnurUS16Test extends TestBase {
 
@@ -55,8 +52,8 @@ public class OnurUS16Test extends TestBase {
         Assert.assertTrue(dogrumu);
     }
     @AfterMethod
-    public void tearDown() throws InterruptedException {
+    public void tearDown() {
         Driver.closeDriver();
-        Thread.sleep(2000);
+
     }
 }
